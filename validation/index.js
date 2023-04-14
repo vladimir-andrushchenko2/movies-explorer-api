@@ -1,7 +1,7 @@
 const users = require('./users');
-const cards = require('./cards');
+const movies = require('./movies');
 
 module.exports = {
   ...users,
-  ...cards,
+  ...movies,
 };

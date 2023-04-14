@@ -1,11 +1,5 @@
 const { Joi, celebrate } = require('celebrate');
 
-const validateGetUser = celebrate({
-  params: Joi.object().keys({
-    userId: Joi.string().hex().length(24).required(),
-  }),
-});
-
 const validateLogin = celebrate({
   body: Joi.object().keys({
     email: Joi.string().required().email(),
@@ -24,20 +18,12 @@ const validatePostUser = celebrate({
 const validatePatchUser = celebrate({
   body: Joi.object().keys({
     name: Joi.string().required().min(2).max(30),
-    about: Joi.string().required().min(2).max(30),
-  }),
-});
-
-const validatePatchUserAvatar = celebrate({
-  body: Joi.object().keys({
-    avatar: Joi.string().required().pattern(/^(http|https):\/\/[^ "]+$/),
+    email: Joi.string().required().min(2).max(30),
   }),
 });
 
 module.exports = {
-  validateGetUser,
   validatePostUser,
   validateLogin,
   validatePatchUser,
-  validatePatchUserAvatar,
 };
