@@ -3,7 +3,8 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/user');
 const { NotFound } = require('../customErrors');
 const makeCatchForController = require('../utils/makeCatchForControllers');
-const { USER_NOT_FOUND_MSG, JWT_SECRET } = require('../environment');
+const { JWT_SECRET } = require('../environment');
+const { USER_NOT_FOUND_MSG } = require('../constants');
 
 function getUserWithIdFromCallback(getIdFromReqCallback) {
   return (req, res, next) => {
