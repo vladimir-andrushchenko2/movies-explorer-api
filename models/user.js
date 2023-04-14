@@ -7,25 +7,7 @@ const userSchema = new mongoose.Schema({
     type: String,
     minlength: 2,
     maxlength: 30,
-    default: 'Jacques Cousteau',
-  },
-  about: {
-    type: String,
-    minlength: 2,
-    maxlength: 30,
-    default: 'French naval officer',
-  },
-  avatar: {
-    type: String,
-    default: 'https://pictures.s3.yandex.net/resources/jacques-cousteau_1604399756.png',
-    validate: {
-      validator(value) {
-        return /^(http|https):\/\/[^ "]+$/.test(value);
-      },
-      message(props) {
-        return `${props.value} is not a valid url`;
-      },
-    },
+    required: true,
   },
   email: {
     type: String,

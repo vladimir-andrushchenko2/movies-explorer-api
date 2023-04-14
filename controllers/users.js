@@ -5,12 +5,6 @@ const { NotFound } = require('../customErrors');
 const makeCatchForController = require('../utils/makeCatchForControllers');
 const { USER_NOT_FOUND_MSG, JWT_SECRET } = require('../environment');
 
-function getUsers(req, res, next) {
-  User.find({})
-    .then((users) => res.send({ data: users }))
-    .catch(makeCatchForController(next));
-}
-
 function getUserWithIdFromCallback(getIdFromReqCallback) {
   return (req, res, next) => {
     User.findById(getIdFromReqCallback(req))
@@ -25,26 +19,7 @@ function getUserWithIdFromCallback(getIdFromReqCallback) {
   };
 }
 
-const getUser = getUserWithIdFromCallback((req) => req.params.userId);
-
 const getMe = getUserWithIdFromCallback((req) => req.user._id);
-
-function postUser(req, res, next) {
-  const {
-    password, ...data
-  } = req.body;
-
-  bcrypt.hash(password, 10)
-    .then((hash) => User.create({
-      ...data, password: hash,
-    }))
-    .then(({
-      name, about, avatar, email, _id,
-    }) => res.status(201).send({
-      name, about, avatar, email, _id,
-    }))
-    .catch(makeCatchForController(next));
-}
 
 function updateUserWithCallback(getNewDataObjFromBodyCallback) {
   return (req, res, next) => {
@@ -67,9 +42,24 @@ function updateUserWithCallback(getNewDataObjFromBodyCallback) {
   };
 }
 
-const patchUser = updateUserWithCallback(({ name, about }) => ({ name, about }));
+const patchUser = updateUserWithCallback(({ name, email }) => ({ name, email }));
 
-const patchUserAvatar = updateUserWithCallback(({ avatar }) => ({ avatar }));
+function register(req, res, next) {
+  const {
+    password, ...data
+  } = req.body;
+
+  bcrypt.hash(password, 10)
+    .then((hash) => User.create({
+      ...data, password: hash,
+    }))
+    .then(({
+      name, email, _id,
+    }) => res.status(201).send({
+      name, email, _id,
+    }))
+    .catch(makeCatchForController(next));
+}
 
 function login(req, res, next) {
   const { email, password } = req.body;
@@ -95,5 +85,5 @@ function logout(req, res) {
 }
 
 module.exports = {
-  getUsers, getUser, postUser, patchUser, patchUserAvatar, login, getMe, logout,
+  register, patchUser, login, getMe, logout,
 };
