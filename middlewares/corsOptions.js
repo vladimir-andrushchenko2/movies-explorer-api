@@ -1,6 +1,7 @@
 const options = {
   origin: [
     'http://localhost:3000',
+    'yandex.nomoredomains.monster',
   ],
   methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
   preflightContinue: false,
