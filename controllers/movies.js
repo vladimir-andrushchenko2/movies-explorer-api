@@ -45,7 +45,7 @@ async function postMovie(req, res, next) {
 }
 
 function deleteMovie(req, res, next) {
-  Movie.findById(req.params.movieId)
+  Movie.findById(req.params._id)
     .populate(['owner'])
     .then(async (movie) => {
       if (!movie) {
