@@ -1,12 +1,10 @@
 require('dotenv').config();
-
 const mongoose = require('mongoose');
+const { DB_ADDRESS, PORT } = require('./environment');
 
 const app = require('./app');
 
-const { PORT = 8080 } = process.env;
-
-mongoose.connect('mongodb://127.0.0.1:27017/bitfilmsdb');
+mongoose.connect(DB_ADDRESS);
 
 app.listen(PORT, () => {
   console.log('Listening on port', PORT);
