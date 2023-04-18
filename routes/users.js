@@ -6,6 +6,6 @@ const { validatePatchUser } = require('../validation');
 
 router.get('/me', getMe);
 router.patch('/me', validatePatchUser, patchUser);
-router.delete('/logout', logout);
+router.delete('/signout', logout);
 
 module.exports = router;
