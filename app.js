@@ -14,10 +14,10 @@ const app = express();
 
 app.use(helmet());
 app.use('*', cors(options));
+app.use(requestLogger);
 app.use(limiter);
 app.use(express.json());
 app.use(cookieParser());
-app.use(requestLogger);
 
 app.use('/', require('./routes'));
 
