@@ -4,7 +4,7 @@ const { NotFound, ForbiddenError } = require('../customErrors');
 const { CARD_NOT_FOUND_MSG } = require('../constants');
 
 function getMovies(req, res, next) {
-  Movie.find({})
+  Movie.find({ owner: req.user._id })
     .sort({ createdAt: -1 })
     .populate(['owner'])
     .then((movies) => res.send({ movies }))
